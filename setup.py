@@ -12,7 +12,7 @@ the Apache 2.0 License.
 
 setup(
     name='hr_little_api',
-    version='19.10.0',
+    version='19.10.1',
     description='The Python API for controlling Hanson Robotics consumer robots',
     long_description=long_description,
     license='Apache License Version 2.0',
@@ -20,7 +20,7 @@ setup(
     author_email='info@hansonrobotics.com',
     url='https://github.com/hansonrobotics/hr-little-api',
     packages=['hr_little_api', 'hr_little_api_examples'],
-    download_url='https://github.com/hansonrobotics/hr-little-api/v19.10.0.tar.gz',
+    download_url='https://github.com/hansonrobotics/hr-little-api/v19.10.1.tar.gz',
     keywords=['robotics', 'einstein', 'sophia', 'robot', 'AI'],
     install_requires=['logbook>=1.5.2'],
     test_suite="tests",
