@@ -73,7 +73,7 @@ class TcpTransport:
         :param message: the message to send to the robot.
         :return: None.
         """
-
+        self._log.debug("Data sent {}".format(message.encode(self._encoding)))
         with self._lock:
             try:
                 self._sock.sendall(message.encode(self._encoding))
