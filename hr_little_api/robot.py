@@ -171,7 +171,7 @@ class Robot:
         self._log.level = log_level
         self._read_rate_hz = read_rate_hz
         self._keep_alive_secs = 9.0
-        self._read_commands = [] #[voltage_cmd()]
+        self._read_commands = [voltage_cmd()]
         self._read_thread = threading.Thread(target=self._send_read_cmds)
         self._read_event = threading.Event()
         self._keep_alive_thread = threading.Thread(target=self._keep_alive)
