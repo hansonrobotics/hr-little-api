@@ -22,6 +22,7 @@ from enum import Enum, auto
 from typing import Callable
 
 import logbook
+import base64
 from logbook import Logger, StreamHandler
 
 from hr_little_api.functional import *
@@ -243,6 +244,7 @@ class Robot:
         handle.add_callback(self._set_action_done)
         self._add_action_handle(handle)
         cmd = activity_cmd(builder.build() + callback_end(handle.id).build())
+        # self._log.debug(cmd)
         self._transport.send(cmd)
 
         if block:
@@ -420,6 +422,11 @@ class Robot:
         handle_to_finish = None
 
         with self._action_handle_lock:
+            if action_id == 'all_actions':
+                for action_id in self._action_handles:
+                    count, ah = self._action_handles[action_id]
+                    # Print all done
+                    ah.done()
             if action_id in self._action_handles:
                 # These get triggered twice because the robot sends two triggers back
                 # for some reason. We send the callback on the second trigger in case
@@ -460,9 +467,6 @@ class Robot:
             self._keep_alive_event.wait(timeout=self._keep_alive_secs)
 
     def _data_received_cb(self, msg):
-        self._log.debug("data_received_cb: {}".format(msg))
-        # TODO: handle partial messages
-
         try:
             # Parse messages, there can be more than one json message returned in msg
             prev_index = 0
@@ -494,3 +498,13 @@ class Robot:
                 self._set_action_handle_done(trigger)
             else:
                 self._log.debug("Unknown trigger: {}".format(trigger))
+
+        if data.get('cmd', False) == 'cmd.ble':
+            b64data = data['data']
+            data = [b for b in base64.b64decode(b64data.encode('ascii'))]
+            # Hack before triggers are fixed. Finished all actions
+            if data[4] == 26:
+                self._set_action_handle_done('all_actions')
+
+
+
