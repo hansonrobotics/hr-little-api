@@ -252,7 +252,7 @@ class Robot:
 
         return handle
 
-    def walk_forward(self, steps: int = 4, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
+    def walk_forward(self, steps: int = 1, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
         """ An action to make the robot walk forward a given number of steps.
 
         :param steps: the number of steps to take. Must be between 1 and 10 steps. A step means both feet step
@@ -275,7 +275,7 @@ class Robot:
 
         return handle
 
-    def walk_backward(self, steps: int = 4, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
+    def walk_backward(self, steps: int = 1, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
         """ An action to make the robot walk backward a given number of steps.
 
         :param steps: the number of steps to take. Must be between 1 and 10 steps. A step means both feet step
@@ -298,7 +298,7 @@ class Robot:
 
         return handle
 
-    def walk_left(self, steps: int = 4, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
+    def walk_left(self, steps: int = 1, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
         """ An action to make the robot walk left a given number of steps.
 
         :param steps: the number of steps to take. Must be between 1 and 10 steps. A step means the right foot takes
@@ -321,7 +321,7 @@ class Robot:
 
         return handle
 
-    def walk_right(self, steps: int = 4, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
+    def walk_right(self, steps: int = 1, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
         """ An action to make the robot walk right a given number of steps.
 
         :param steps: the number of steps to take. Must be between 1 and 10 steps. A step means the left foot takes
@@ -505,6 +505,7 @@ class Robot:
             # Hack before triggers are fixed. Finished all actions
             if data[4] == 26:
                 self._set_action_handle_done('all_actions')
+            self._log.debug("Decoded data {}".format([hex(d) for d in data]))
 
 
 
