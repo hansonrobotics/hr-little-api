@@ -27,7 +27,7 @@ pip3 install hr-little-api
 ## Installation from source
 Clone project from Github
 ```bash
-git clone https://github.com/jdddog/hr_little_api
+git clone https://github.com/hansonrobotics/hr_little_api
 ```
 
 Enter folder
