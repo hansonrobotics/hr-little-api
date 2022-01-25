@@ -65,7 +65,7 @@ class TcpTransport:
         self._is_read_thread_running = False
         self._sock.close()
         if self._read_thread is not None:
-            self._read_thread.join()
+            self._read_thread.join(2)
 
     def send(self, message: str) -> None:
         """ Send a message to the robot.
@@ -108,6 +108,7 @@ class TcpTransport:
         if not self._is_read_thread_running:
             self._is_read_thread_running = True
             self._read_thread = threading.Thread(target=self._read_thread_func)
+            self._read_thread.daemon = True
             self._read_thread.start()
 
     def _read_thread_func(self) -> None:

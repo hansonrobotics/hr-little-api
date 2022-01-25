@@ -173,8 +173,10 @@ class Robot:
         self._keep_alive_secs = 9.0
         self._read_commands = [voltage_cmd()]
         self._read_thread = threading.Thread(target=self._send_read_cmds)
+        self._read_thread.daemon = True
         self._read_event = threading.Event()
         self._keep_alive_thread = threading.Thread(target=self._keep_alive)
+        self._keep_alive_thread.daemon = True
         self._keep_alive_event = threading.Event()
         self._transport = TcpTransport(data_received_cb=self._data_received_cb,
                                        initial_cmd=activity_cmd(" "),
@@ -223,10 +225,10 @@ class Robot:
 
         self._read_event.set()
         if self._read_thread.is_alive():
-            self._read_thread.join()
+            self._read_thread.join(2)
         self._keep_alive_event.set()  # Will cancel keep alive from sleeping
         if self._keep_alive_thread.is_alive():
-            self._keep_alive_thread.join()
+            self._keep_alive_thread.join(2)
         self._log.info("Disconnected.")
 
     def say(self, text: str, block: bool = True, done_cb: Callable[[], None] = None) -> ActionHandle:
