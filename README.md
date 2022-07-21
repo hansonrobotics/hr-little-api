@@ -4,7 +4,6 @@ The **hr-little-api** is a Python 3 module that lets you program Hanson Robotics
 
 ## Contents
 - [Dependencies](#dependencies): what you need before getting started.
-- [Installation from PyPI](#installation-from-pypi): how to install hr-little-api from PyPI with pip.
 - [Installation from source](#installation-from-source): how to install hr-little-api from source.
 - [Quick Start](#quick-start): how to get started programming your robot.
 - [Running Examples](#running-examples): how to run the pre-made example programs.
@@ -17,12 +16,6 @@ To follow these tutorials you will need:
 * A Professor Einstein robot.
 * Python 3.6 or greater.
 * A computer with WiFi: Linux, Windows or MacOS X.
-
-## Installation from PyPI
-To install hr-little-api from PyPI, with the command line using pip:
-```python
-pip3 install hr-little-api
-```
 
 ## Installation from source
 Clone project from Github
@@ -47,7 +40,7 @@ how to use the API and it's various features.
 ### Setting up your robot
 Turn on Professor Einstein with the power button on at the back:
 
-![Professor Einstein on/off button](https://github.com/jdddog/consumer_robot_api/blob/master/docs/einstein_power.jpg?raw=true)
+![Professor Einstein on/off button](https://github.com/hansonrobotics/hr-little-api/blob/master/docs/einstein_power.jpg?raw=true)
 
 When your robot starts up, it should say:
 > Ok here we go, just one, I don't see any WiFi networks I recognize, go to the connection channel in your Stein-O-Matic
@@ -56,7 +49,7 @@ When your robot starts up, it should say:
 To program Professor Einstein, you will need his WiFi SSID and password. To find this, press the `Binding Button` as 
 shown in the image below:
 
-![Binding button](https://github.com/jdddog/consumer_robot_api/blob/master/docs/einstein_binding_button.jpg?raw=true)
+![Binding button](https://github.com/hansonrobotics/hr-little-api/blob/master/docs/einstein_binding_button.jpg?raw=true)
 
 Professor Einstein should then say the following:
 > Go to your device settings and look for network EinsteinXXXX my password is geniusXXXX.
