@@ -21,7 +21,9 @@ class CLI(cmd.Cmd, object):
         self._user_dir = os.path.expanduser("~/.peclient")
         self.histfile = os.path.join(self._user_dir, ".history")
         self.input_lines = []
-        self.disconnected = False
+        if not self.api.connect():
+            raise RuntimeError("Can't connect to the robot")
+        self.robot_connected = True
 
     def default(self, line):
         try:
@@ -58,9 +60,8 @@ class CLI(cmd.Cmd, object):
         """
         Quit interactive console
         """
-        if not self.disconnected:
-            self.robot.disconnect()
-            self.disconnected = True
+        if self.robot_connected:
+            self.api.disconnect()
             print("Bye")
         return True
 
