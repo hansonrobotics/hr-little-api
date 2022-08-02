@@ -407,6 +407,11 @@ Custom animations:
 python3 custom_animations.py
 ```
 
+Interactive CLI:
+```python
+python3 ipeclient.py
+```
+
 ## Code Documentation
 Coming soon...
 
