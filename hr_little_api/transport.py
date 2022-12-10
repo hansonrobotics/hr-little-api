@@ -28,7 +28,7 @@ class TcpTransport:
 
     def __init__(self, tcp_ip: str = '192.168.1.1', tcp_port: int = 8080, buffer_size: int = 4096,
                  initial_timeout: float = 5.0, data_received_cb: Callable[[str], None] = None, encoding: str = 'utf-8',
-                 initial_cmd: str = '', log_level=logbook.INFO):
+                 initial_cmd: str = '', log_level=logbook.INFO, interface=None):
         """ Constructor for TcpTransport, which is used to send and receive data to and from the robot respectively.
 
         :param tcp_ip: IP address of robot.
@@ -39,6 +39,7 @@ class TcpTransport:
         :param encoding: encoding to send data over socket in.
         :param initial_cmd: the first command to send.
         :param log_level: the level for displaying and logging information, e.g. debugging information.
+        :param interface: the network interface to bind to, e.g. eth1.
         """
 
         StreamHandler(sys.stdout).push_application()
@@ -52,6 +53,8 @@ class TcpTransport:
         self._buffer_size = buffer_size
         self._initial_timeout = initial_timeout
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if interface:
+            self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, str(interface + '\0').encode('utf-8'))
         self._initial_cmd = initial_cmd
         self._is_read_thread_running = False
         self._read_thread = None

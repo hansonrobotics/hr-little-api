@@ -156,11 +156,12 @@ class Robot:
                        Animation.sleeping: sleeping, Animation.sleepy: sleepy, Animation.tell_a_joke: tell_a_joke,
                        Animation.wake_up: wake_up, Animation.worry: worry}
 
-    def __init__(self, read_rate_hz: float = 0.05, log_level=logbook.INFO):
+    def __init__(self, read_rate_hz: float = 0.05, log_level=logbook.INFO, interface=None):
         """ The Robot constructor.
 
         :param read_rate_hz: the rate in Hz to read data from the robot.
         :param log_level: the level for displaying and logging information, e.g. debugging information.
+        :param interface: the network interface in socket bind
         """
 
         StreamHandler(sys.stdout).push_application()
@@ -180,7 +181,7 @@ class Robot:
         self._keep_alive_event = threading.Event()
         self._transport = TcpTransport(data_received_cb=self._data_received_cb,
                                        initial_cmd=activity_cmd(" "),
-                                       log_level=log_level)
+                                       log_level=log_level, interface=interface)
         self._action_handle_lock = threading.Lock()
         self._action_handles = {}
         self._is_action_active_lock = threading.Lock()
@@ -487,7 +488,7 @@ class Robot:
             self._log.error("Error decoding json for message: {}. Error: {}".format(msg, e))
 
     def _update_state(self, data):
-        if "device" in data and self.version is '':
+        if "device" in data and self.version == '':
             self.version = data["device"]["version"]
 
         if "trigger" in data:
